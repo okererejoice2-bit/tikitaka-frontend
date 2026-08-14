@@ -1,10 +1,22 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 
+const API = 'https://tikitaka-backend-x467.onrender.com';
+
 export default function App() {
   const [screen, setScreen] = useState('chats');
   const [theme, setTheme] = useState('system');
   const [showSplash, setShowSplash] = useState(true);
+
+  const testBackend = async () => {
+    try {
+      const res = await fetch(`${API}/`);
+      const data = await res.json();
+      alert(data.message);
+    } catch (err) {
+      alert('Backend connection failed');
+    }
+  };
 
   useEffect(() => {
     const saved = localStorage.getItem('tikitaka-theme') || 'system';
@@ -67,8 +79,10 @@ export default function App() {
         </h1>
 
         {screen === 'chats' && (
-          <button className="new-chat">+ New Chat</button>
-        )}
+  <button className="new-chat-btn" onClick={testBackend}>
+    + New Chat
+  </button>
+)}
       </header>
 
       <main className="content">
